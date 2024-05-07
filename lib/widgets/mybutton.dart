@@ -11,8 +11,7 @@ class MyButton extends StatelessWidget {
       width: double.infinity,
       child: RaisedButton(
         child: Text(
-          name,
-          style: TextStyle(color: Colors.white),
+          name, style: TextStyle(color: Colors.white),
         ),
         color: Color(0xff746bc9),
         onPressed: onPressed,
