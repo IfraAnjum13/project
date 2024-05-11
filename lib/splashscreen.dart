@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: Colors.white, // Change to your splash screen background color
+      backgroundColor: Colors.blue, // Change to your splash screen background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
