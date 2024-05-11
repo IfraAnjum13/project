@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:project/welcome.dart';
 import 'package:project/homepage.dart'; // Import your homepage file
 
 class SplashScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class SplashScreen extends StatelessWidget {
     // Add a delay of 3 seconds before navigating to the home page
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()), // Navigate to the home page
+        MaterialPageRoute(builder: (context) => OnboardingScreen()), // Navigate to the home page
       );
     });
 

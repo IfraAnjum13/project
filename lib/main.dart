@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'E-Commerce App',
+      title: 'E-Commerce',
       home: SplashScreen(), // Display splash screen
     );
   }
