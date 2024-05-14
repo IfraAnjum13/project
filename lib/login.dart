@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:project/homepage.dart'; // Import your homepage file
+import 'package:project/signup.dart'; // Import your signup file
+import 'package:project/screen/forgotPassword.dart';
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -12,6 +14,20 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void _login() {
+    // Perform your login logic here
+    bool loginSuccess = true; // Assuming login is successful for demonstration
+
+    if (loginSuccess) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()), // Navigate to homepage
+      );
+    } else {
+      // Handle login failure
+    }
   }
 
   @override
@@ -43,17 +59,41 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                    );
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
             ElevatedButton(
-              onPressed: () {
-                // Add login functionality
-              },
+              onPressed: _login, // Call login function when button is pressed
               child: Text('Login'),
             ),
+            SizedBox(height: 10), // Add some space between buttons
             TextButton(
               onPressed: () {
-                // Navigate to signup screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                );
               },
-              child: Text('Create an account'),
+              child: Text(
+                'Don\'t have an account? signup',
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
             ),
             SizedBox(height: 10), // Add some space between buttons
             ElevatedButton(

@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
     // Add a delay of 3 seconds before navigating to the home page
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => OnboardingScreen()), // Navigate to the home page
+        MaterialPageRoute(builder: (context) => WelcomeScreen()), // Navigate to the home page
       );
     });
 
