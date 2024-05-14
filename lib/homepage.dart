@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('E Commerce'),
+        title: Text('Glamify',style: TextStyle(fontWeight: FontWeight.bold),),
         backgroundColor: Colors.blue,
         actions: <Widget>[
           IconButton(

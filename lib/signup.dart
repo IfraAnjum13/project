@@ -12,10 +12,7 @@ class SignUpScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Create your account',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          title: Text('Create your account', style: TextStyle(fontWeight: FontWeight.bold),),
           backgroundColor: Colors.blue,
         ),
         body: SignUpForm(),
@@ -82,7 +79,7 @@ class _SignUpFormState extends State<SignUpForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already have an account? '),
+                Text('Already have an account? ',style: TextStyle(color: Colors.black),),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -90,12 +87,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
-                    ),
+                  child: Text('Login', style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline,),
                   ),
                 ),
               ],
