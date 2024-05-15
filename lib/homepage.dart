@@ -128,8 +128,7 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 20), // Add space between SearchBar and Categories
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'Categories',
+                      child: Text('Categories',
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                     ),

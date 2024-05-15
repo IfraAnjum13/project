@@ -6,7 +6,7 @@ class TrendingNow extends StatelessWidget {
       'imageUrl': 'https://saleemfabrics.pk/cdn/shop/files/untitled4_720x_1b8aba23-88bc-44de-a5fd-2dd18742b431.jpg?v=1689249892',
       'description': '3 Piece Suit',
       'price': '\$20',
-      'rating': 4.5,
+      'rating': 3.5,
     },
     {
       'imageUrl': 'https://static-01.daraz.pk/p/43a9724a6530b95d2ec33d6c7b5d5fb1.png_750x750.jpg_.webp',
