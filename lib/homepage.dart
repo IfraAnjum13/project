@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:project/login.dart';
 import 'package:project/signup.dart';
+import 'package:project/screen/bottom_navigate.dart';
+import 'package:project/screen/trending_now.dart';
+import 'package:project/screen/banner_slider_with_dots.dart';
+
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +19,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class HomePage extends StatelessWidget {
-  // Define a list of image URLs for banners
   final List<String> bannerImages = [
     'https://marketplace.canva.com/EAFWecuevFk/1/0/1600w/canva-grey-brown-minimalist-summer-season-collections-banner-landscape-VXEmg9V800o.jpg',
     'https://mir-s3-cdn-cf.behance.net/project_modules/hd/ea996e45377079.5937175b5b421.jpg',
@@ -30,7 +32,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Glamify',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text(
+          'Glamify',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.blue,
         actions: <Widget>[
           IconButton(
@@ -51,9 +56,8 @@ class HomePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => SignUpScreen()),
               );
-             },
-            child: Text('Signup', style: TextStyle(color: Colors.black),
-            ),
+            },
+            child: Text('Signup', style: TextStyle(color: Colors.black),),
           ),
         ],
       ),
@@ -111,65 +115,50 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SearchBar(),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Categories',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 10), // Add space between AppBar and SearchBar
+                    SearchBar(),
+                    SizedBox(height: 20), // Add space between SearchBar and Categories
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'Categories',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      height: 150,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          CategoryChip(icon: Icons.man, label: 'Men'),
+                          CategoryChip(icon: Icons.woman, label: 'Women'),
+                          CategoryChip(icon: Icons.child_care, label: 'Kids'),
+                          CategoryChip(icon: Icons.face, label: 'Beauty'),
+                        ],
+                      ),
+                    ),
+                    BannerSliderWithDots(bannerImages: bannerImages), // Call the modified BannerSliderWithDots widget
+                    TrendingNow(),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 10),
-            Container(
-              height: 150,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  CategoryChip(icon: Icons.shopping_bag, label: 'Fashion'),
-                  CategoryChip(icon: Icons.devices, label: 'Electronics'),
-                  CategoryChip(icon: Icons.kitchen, label: 'Appliances'),
-                  CategoryChip(icon: Icons.face, label: 'Beauty'),CategoryChip(icon: Icons.emoji_objects, label: 'Fun'),
-                  CategoryChip(icon: Icons.home, label: 'Home accessories'),
-                ],
-              ),
+            BottomNavBar(
+              onItemSelected: (index) {
+                // Handle bottom navigation item tapped
+              },
+              currentIndex: 0, // Set the initial index
             ),
 
-            SizedBox(height: 10),
-            Container(
-              height: 200, // Adjust the height according to your requirement
-              child: BannerSliderWithDots(images: bannerImages),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Trending Now',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              height: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 150,
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    color: Colors.blue[200],
-                    child: Center(
-                      child: Text('Trending Item $index'),
-                    ),
-                  );
-                },
-              ),
-            ),
           ],
         ),
       ),
@@ -226,77 +215,6 @@ class CategoryChip extends StatelessWidget {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class BannerSliderWithDots extends StatefulWidget {
-  final List<String> images;
-
-  BannerSliderWithDots({required this.images});
-
-  @override
-  _BannerSliderWithDotsState createState() => _BannerSliderWithDotsState();
-}
-
-class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
-  int _currentPage = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: PageView.builder(
-            itemCount: widget.images.length,
-            onPageChanged: (value) {
-              setState(() {
-                _currentPage = value;
-              });
-            },
-            itemBuilder: (context, index) {
-              return BannerImage(imageUrl: widget.images[index]);
-            },
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            widget.images.length,
-                (index) => Container(
-              width: 10,
-              height: 10,
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _currentPage == index ? Colors.blue : Colors.grey,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class BannerImage extends StatelessWidget {
-  final String imageUrl;
-
-  const BannerImage({
-    Key? key,
-    required this.imageUrl,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      width: 200, // Adjust the width according to your requirement
-      color: Colors.grey, // You can set a placeholder color here
-      child: Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
       ),
     );
   }

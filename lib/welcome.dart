@@ -4,6 +4,8 @@ import 'package:project/signup.dart'; // Import your signup file
 import 'package:project/login.dart'; // Import your login file
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

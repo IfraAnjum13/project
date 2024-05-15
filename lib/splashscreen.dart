@@ -14,13 +14,13 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: Colors.blue, // Change to your splash screen background color
+      //backgroundColor: Colors.blue, // Change to your splash screen background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Add your logo or any other splash screen content here
-            Image.asset('assets/logo.png'), // Change to your logo image path
+            Image.asset('assets/lo.jpg'), // Change to your logo image path
           ],
         ),
       ),
