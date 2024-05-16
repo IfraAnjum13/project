@@ -15,7 +15,7 @@ class _CartScreenState extends State<CartScreen> {
     {"name": "Product 6", "price": 15, "quantity": 6},
     {"name": "Product 7", "price": 10, "quantity": 7},
     {"name": "Product 8", "price": 20, "quantity": 8},
-
+    {"name": "Product 9", "price": 15, "quantity": 9},
   ];
 
   @override
