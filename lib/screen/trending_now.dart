@@ -20,12 +20,7 @@ class TrendingNow extends StatelessWidget {
       'price': '\$30',
       'rating': 4.2,
     },
-    {
-      'imageUrl': 'https://i.pinimg.com/236x/be/98/67/be9867d029ccfd7ea83d80d404cf451d.jpg',
-      'description': 'Summer Outfit',
-      'price': '\$15',
-      'rating': 4.7,
-    },
+
     {
       'imageUrl': 'https://static-01.daraz.pk/p/668a61ab944afd2b7fe67af794044ec0.jpg',
       'description': 'Princess Short',

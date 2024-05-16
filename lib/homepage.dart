@@ -4,7 +4,7 @@ import 'package:project/signup.dart';
 import 'package:project/screen/bottom_navigate.dart';
 import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
-
+import 'package:project/screen/cartScreen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -47,9 +47,13 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              // Add cart functionality here
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
             },
           ),
+
           TextButton(
             onPressed: () {
               Navigator.push(
