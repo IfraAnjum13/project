@@ -5,6 +5,7 @@ import 'package:project/screen/bottom_navigate.dart';
 import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
 import 'package:project/screen/cartScreen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class HomePage extends StatelessWidget {
   final List<String> bannerImages = [
     'https://marketplace.canva.com/EAFWecuevFk/1/0/1600w/canva-grey-brown-minimalist-summer-season-collections-banner-landscape-VXEmg9V800o.jpg',
@@ -30,139 +32,143 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Glamify',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.blue,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Add notification functionality here
-            },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Glamify',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
-              );
-            },
-          ),
-
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignUpScreen()),
-              );
-            },
-            child: Text('Signup', style: TextStyle(color: Colors.black),),
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+          backgroundColor: Colors.pink,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                // Add notification functionality here
+              },
             ),
-            ListTile(
-              leading: Icon(Icons.login),
-              title: Text('Login'),
-              onTap: () {
+            IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => CartScreen()),
                 );
               },
             ),
-            ListTile(
-              leading: Icon(Icons.details),
-              title: Text('Product Details'),
-              onTap: () {
-                // Navigate to product details page
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                );
               },
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('User Profile'),
-              onTap: () {
-                // Navigate to user profile page
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.contact_mail),
-              title: Text('Contact Us'),
-              onTap: () {
-                // Navigate to contact us page
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.history),
-              title: Text('Order History'),
-              onTap: () {
-                // Navigate to order history page
-              },
+              child: Text(
+                'Signup',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 10), // Add space between AppBar and SearchBar
-                    SearchBar(),
-                    SizedBox(height: 20), // Add space between SearchBar and Categories
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text('Categories',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 150,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          CategoryChip(icon: Icons.man, label: 'Men'),
-                          CategoryChip(icon: Icons.woman, label: 'Women'),
-                          CategoryChip(icon: Icons.child_care, label: 'Kids'),
-                          CategoryChip(icon: Icons.face, label: 'Beauty'),
-                        ],
-                      ),
-                    ),
-                    BannerSliderWithDots(bannerImages: bannerImages), // Call the modified BannerSliderWithDots widget
-                    TrendingNow(),
-                  ],
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text(
+                  'DashBoard',
+                  style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.pink,
                 ),
               ),
-            ),
-            BottomNavBar(
-              onItemSelected: (index) {
-                // Handle bottom navigation item tapped
-              },
-              currentIndex: 0, // Set the initial index
-            ),
-
-          ],
+              ListTile(
+                leading: Icon(Icons.login),
+                title: Text('Login'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.details),
+                title: Text('Product Details'),
+                onTap: () {
+                  // Navigate to product details page
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('User Profile'),
+                onTap: () {
+                  // Navigate to user profile page
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.contact_mail),
+                title: Text('Contact Us'),
+                onTap: () {
+                  // Navigate to contact us page
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.history),
+                title: Text('Order History'),
+                onTap: () {
+                  // Navigate to order history page
+                },
+              ),
+            ],
+          ),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10), // Add space between AppBar and SearchBar
+                      SearchBar(),
+                      SizedBox(height: 20), // Add space between SearchBar and Categories
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Categories',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: 150,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            CategoryChip(icon: Icons.man, label: 'Men'),
+                            CategoryChip(icon: Icons.woman, label: 'Women'),
+                            CategoryChip(icon: Icons.child_care, label: 'Kids'),
+                            CategoryChip(icon: Icons.face, label: 'Beauty'),
+                          ],
+                        ),
+                      ),
+                      BannerSliderWithDots(bannerImages: bannerImages), // Call the modified BannerSliderWithDots widget
+                      TrendingNow(),
+                    ],
+                  ),
+                ),
+              ),
+              BottomNavBar(
+                onItemSelected: (index) {
+                  // Handle bottom navigation item tapped
+                },
+                currentIndex: 0, // Set the initial index
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -179,7 +185,7 @@ class SearchBar extends StatelessWidget {
           hintText: 'Search',
           prefixIcon: Icon(Icons.search),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
       ),
@@ -204,7 +210,7 @@ class CategoryChip extends StatelessWidget {
       child: Column(
         children: [
           CircleAvatar(
-            backgroundColor: Colors.blue[200],
+            backgroundColor: Colors.pink[200],
             radius: 30,
             child: Icon(
               icon,

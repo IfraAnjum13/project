@@ -50,7 +50,7 @@ class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
               height: 10,
               margin: EdgeInsets.symmetric(horizontal: 2),
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.pink,
                 shape: BoxShape.circle,
               ),
             )

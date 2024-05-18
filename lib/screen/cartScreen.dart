@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/screen/Checkout.dart';
+import 'package:project/screen/bottom_navigate.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -20,33 +22,25 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart'),
-        backgroundColor: Colors.blue,
-      ),
-      body: _buildCartList(),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Total: \$${_calculateTotalPrice()}',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Implement checkout functionality
-                },
-                child: Text(
-                  'Checkout',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-              ),
-            ],
-          ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Cart'),
+          backgroundColor: Colors.pink,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: _buildCartList(),
+            ),
+            _buildTotalAmount(),
+          ],
+        ),
+        bottomNavigationBar: BottomNavBar(
+          onItemSelected: (index) {
+            // Handle bottom navigation item tapped
+          },
+          currentIndex: 0, // Set the initial index
         ),
       ),
     );
@@ -86,6 +80,33 @@ class _CartScreenState extends State<CartScreen> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildTotalAmount() {
+    double totalAmount = _calculateTotalPrice();
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CheckoutPage()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+            ),
+            child: Text('Checkout'),
+          ),
+        ],
+      ),
     );
   }
 
