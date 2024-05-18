@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project/login.dart';
-import 'package:project/screen/bottom_navigate.dart';
 
 void main() {
   runApp(SignUpScreen());
@@ -25,14 +24,14 @@ class SignUpScreen extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.all(20.0),
-                  child: SignUpForm(),
+                  child: SignUpForm(
+                    onSignUpComplete: (userData) {
+                      // Handle signup completion here
+                      print('User signed up: $userData');
+                      // You can navigate to another screen or perform any other action
+                    },
+                  ),
                 ),
-              ),
-              BottomNavBar(
-                onItemSelected: (index) {
-                  // Handle bottom navigation item tapped
-                },
-                currentIndex: 0, // Set the initial index
               ),
             ],
           ),
@@ -43,6 +42,10 @@ class SignUpScreen extends StatelessWidget {
 }
 
 class SignUpForm extends StatefulWidget {
+  final Function(Map<String, String>) onSignUpComplete; // Callback function to handle signup completion
+
+  SignUpForm({required this.onSignUpComplete});
+
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
@@ -88,7 +91,26 @@ class _SignUpFormState extends State<SignUpForm> {
         SizedBox(height: 20.0),
         ElevatedButton(
           onPressed: () {
-            // Implement signup logic here
+            // Get user input from the form
+            String fullName = _fullNameController.text;
+            String password = _passwordController.text;
+            String confirmPassword = _confirmPasswordController.text;
+            String gender = _genderController.text;
+            String phoneNumber = _phoneNumberController.text;
+
+            // Validate user input (you can add validation logic here)
+
+            // Package user input into a map
+            Map<String, String> userData = {
+              'fullName': fullName,
+              'password': password,
+              'confirmPassword': confirmPassword,
+              'gender': gender,
+              'phoneNumber': phoneNumber,
+            };
+
+            // Call the callback function and pass user data
+            widget.onSignUpComplete(userData);
           },
           child: Text('Sign Up'),
         ),

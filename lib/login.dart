@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project/homepage.dart';
 import 'package:project/signup.dart';
 import 'package:project/screen/forgotPassword.dart';
-import 'package:project/screen/bottom_navigate.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -136,12 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-            ),
-            BottomNavBar(
-              onItemSelected: (index) {
-                // Handle bottom navigation item tapped
-              },
-              currentIndex: 0, // Set the initial index
             ),
           ],
         ),

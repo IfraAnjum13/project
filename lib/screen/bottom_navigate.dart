@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/homepage.dart';
-
+import 'package:project/screen/favorites.dart';
+import 'package:project/screen/user_profile.dart';
 class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -11,23 +12,44 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     HomePage(),
-    SearchPage(),
-    FavoritesPage(),
-    ProfilePage(),
+    //SearchPage(),
+    FavoritesScreen(),
+   // ProfilePage(),
   ];
 
   void _onItemSelected(int index) {
-    if (index == 0) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-            (Route<dynamic> route) => false,
-      );
-    } else {
-      setState(() {
-        _currentIndex = index;
-      });
-    }
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_currentIndex],
+    );
+  }
+}
+
+class MainScreenWithBottomNavBar extends StatefulWidget {
+  @override
+  _MainScreenWithBottomNavBarState createState() => _MainScreenWithBottomNavBarState();
+}
+
+class _MainScreenWithBottomNavBarState extends State<MainScreenWithBottomNavBar> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    MainScreen(),
+   // SearchPage(),
+    FavoritesScreen(),
+   // ProfilePage(),
+  ];
+
+  void _onItemSelected(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -86,57 +108,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
               label: 'Profile',
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class SearchPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Search Page'),
-      ),
-      body: Center(
-        child: Text(
-          'This is the Search Page',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class FavoritesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Favorites Page'),
-      ),
-      body: Center(
-        child: Text(
-          'This is the Favorites Page',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile Page'),
-      ),
-      body: Center(
-        child: Text(
-          'This is the Profile Page',
-          style: TextStyle(fontSize: 24),
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:project/screen/bottom_navigate.dart';
 import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
 import 'package:project/screen/cartScreen.dart';
+import 'package:project/screen/user_profile.dart'; // Import the user profile screen
 
 void main() {
   runApp(const MyApp());
@@ -104,7 +105,10 @@ class HomePage extends StatelessWidget {
                 leading: Icon(Icons.person),
                 title: Text('User Profile'),
                 onTap: () {
-                  // Navigate to user profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserProfileScreen()),
+                  );
                 },
               ),
               ListTile(
@@ -161,12 +165,20 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              BottomNavBar(
-                onItemSelected: (index) {
-                  // Handle bottom navigation item tapped
-                },
-                currentIndex: 0, // Set the initial index
-              ),
+              // BottomNavBar(
+              //   onItemSelected: (index) {
+              //     // Handle bottom navigation item tapped
+              //     if (index == 2) { // Assuming user profile is at index 2
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => MyAccountScreen(username: 'User',)),
+              //       );
+              //     } else {
+              //       // Handle other navigation items
+              //     }
+              //   },
+              //   currentIndex: 0, // Set the initial index
+              // ),
             ],
           ),
         ),
