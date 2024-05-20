@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project/homepage.dart';
 import 'package:project/screen/favorites.dart';
-import 'package:project/screen/user_profile.dart';
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -32,6 +33,8 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 class MainScreenWithBottomNavBar extends StatefulWidget {
+  const MainScreenWithBottomNavBar({super.key});
+
   @override
   _MainScreenWithBottomNavBarState createState() => _MainScreenWithBottomNavBarState();
 }
@@ -40,7 +43,7 @@ class _MainScreenWithBottomNavBarState extends State<MainScreenWithBottomNavBar>
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    MainScreen(),
+    const MainScreen(),
    // SearchPage(),
     FavoritesScreen(),
    // ProfilePage(),
@@ -68,10 +71,10 @@ class BottomNavBar extends StatefulWidget {
   final ValueChanged<int> onItemSelected;
   final int currentIndex;
   const BottomNavBar({
-    Key? key,
+    super.key,
     required this.onItemSelected,
     required this.currentIndex,
-  }) : super(key: key);
+  });
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -90,7 +93,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           unselectedItemColor: Colors.black,
           currentIndex: widget.currentIndex,
           onTap: widget.onItemSelected,
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',

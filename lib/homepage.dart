@@ -1,13 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project/firebase_options.dart';
 import 'package:project/login.dart';
-import 'package:project/signup.dart';
-import 'package:project/screen/bottom_navigate.dart';
-import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
 import 'package:project/screen/cartScreen.dart';
-import 'package:project/screen/user_profile.dart'; // Import the user profile screen
+import 'package:project/screen/trending_now.dart';
+import 'package:project/screen/user_profile.dart';
+import 'package:project/signup.dart';
+import 'package:project/women.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -36,20 +43,20 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Glamify',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.pink,
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.notifications),
+              icon: const Icon(Icons.notifications),
               onPressed: () {
                 // Add notification functionality here
               },
             ),
             IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -57,129 +64,134 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()),
-                );
-              },
-              child: Text(
-                'Signup',
-                style: TextStyle(color: Colors.black),
+            if (FirebaseAuth.instance.currentUser == null)
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  );
+                },
+                child: const Text(
+                  'Signup',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-            ),
           ],
         ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 child: Text(
                   'DashBoard',
-                  style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
                 ),
                 decoration: BoxDecoration(
                   color: Colors.pink,
                 ),
               ),
+              if (FirebaseAuth.instance.currentUser == null)
+                ListTile(
+                  leading: const Icon(Icons.login),
+                  title: const Text('Login'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
+                ),
               ListTile(
-                leading: Icon(Icons.login),
-                title: Text('Login'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.details),
-                title: Text('Product Details'),
+                leading: const Icon(Icons.details),
+                title: const Text('Product Details'),
                 onTap: () {
                   // Navigate to product details page
                 },
               ),
               ListTile(
-                leading: Icon(Icons.person),
-                title: Text('User Profile'),
+                leading: const Icon(Icons.person),
+                title: const Text('User Profile'),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UserProfileScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => UserProfileScreen()),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.contact_mail),
-                title: Text('Contact Us'),
+                leading: const Icon(Icons.contact_mail),
+                title: const Text('Contact Us'),
                 onTap: () {
                   // Navigate to contact us page
                 },
               ),
               ListTile(
-                leading: Icon(Icons.history),
-                title: Text('Order History'),
+                leading: const Icon(Icons.history),
+                title: const Text('Order History'),
                 onTap: () {
                   // Navigate to order history page
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.woman), // Icon for the Women category
+                title: const Text('Women'), // Title for the Women category
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            WomensWearScreen()), // Navigate to the Women's Wear Screen
+                  );
                 },
               ),
             ],
           ),
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                    height: 10), // Add space between AppBar and SearchBar
+                SearchBar(),
+                const SizedBox(
+                    height: 10), // Add space between SearchBar and Categories
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'Categories',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 150,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
                     children: <Widget>[
-                      SizedBox(height: 10), // Add space between AppBar and SearchBar
-                      SearchBar(),
-                      SizedBox(height: 20), // Add space between SearchBar and Categories
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          'Categories',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 150,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            CategoryChip(icon: Icons.man, label: 'Men'),
-                            CategoryChip(icon: Icons.woman, label: 'Women'),
-                            CategoryChip(icon: Icons.child_care, label: 'Kids'),
-                            CategoryChip(icon: Icons.face, label: 'Beauty'),
-                          ],
-                        ),
-                      ),
-                      BannerSliderWithDots(bannerImages: bannerImages), // Call the modified BannerSliderWithDots widget
-                      TrendingNow(),
+                      const CategoryChip(icon: Icons.man, label: 'Men'),
+                      const CategoryChip(icon: Icons.woman, label: 'Women'),
+                      const CategoryChip(icon: Icons.child_care, label: 'Kids'),
+                      const CategoryChip(icon: Icons.face, label: 'Beauty'),
+                      const CategoryChip(
+                          icon: Icons.accessibility, label: 'FootWear')
                     ],
                   ),
                 ),
-              ),
-              // BottomNavBar(
-              //   onItemSelected: (index) {
-              //     // Handle bottom navigation item tapped
-              //     if (index == 2) { // Assuming user profile is at index 2
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(builder: (context) => MyAccountScreen(username: 'User',)),
-              //       );
-              //     } else {
-              //       // Handle other navigation items
-              //     }
-              //   },
-              //   currentIndex: 0, // Set the initial index
-              // ),
-            ],
+                BannerSliderWithDots(
+                    bannerImages:
+                        bannerImages), // Call the modified BannerSliderWithDots widget
+                TrendingNow(),
+              ],
+            ),
           ),
         ),
       ),
@@ -191,11 +203,11 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -217,25 +229,39 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.pink[200],
-            radius: 30,
-            child: Icon(
-              icon,
-              size: 30,
-              color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        if (label == 'Women') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    WomensWearScreen()), // Navigate to the Women's Wear Screen
+          );
+        } else {
+          // Handle navigation for other categories
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.pink[200],
+              radius: 30,
+              child: Icon(
+                icon,
+                size: 30,
+                color: Colors.white,
+              ),
             ),
-          ),
-          SizedBox(height: 5),
-          Text(
-            label,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ],
+            const SizedBox(height: 5),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,126 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:project/screen/Checkout.dart';
-import 'package:project/screen/bottom_navigate.dart';
+class CheckoutScreen extends StatelessWidget {
+  const CheckoutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Checkout'),
+        backgroundColor: Colors.pink,
+      ),
+      body: const Center(
+        child: Text(
+          'Proceed with your payment details here.',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
+  }
+}
 
 class CartScreen extends StatefulWidget {
+  static List<Map<String, dynamic>> cartItems = [];
+
+  const CartScreen({super.key});
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<Map<String, dynamic>> _cartItems = [
-    {"name": "Product 1", "price": 10, "quantity": 2},
-    {"name": "Product 2", "price": 20, "quantity": 1},
-    {"name": "Product 3", "price": 15, "quantity": 3},
-    {"name": "Product 4", "price": 10, "quantity": 4},
-    {"name": "Product 5", "price": 20, "quantity": 5},
-    {"name": "Product 6", "price": 15, "quantity": 6},
-    {"name": "Product 7", "price": 10, "quantity": 7},
-    {"name": "Product 8", "price": 20, "quantity": 8},
-    {"name": "Product 9", "price": 15, "quantity": 9},
-  ];
+  void removeFromCart(int index) {
+    setState(() {
+      CartScreen.cartItems.removeAt(index);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Item removed from cart')),
+    );
+  }
+
+  void checkout() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Cart'),
-          backgroundColor: Colors.pink,
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: _buildCartList(),
-            ),
-            _buildTotalAmount(),
-          ],
-        ),
-        bottomNavigationBar: BottomNavBar(
-          onItemSelected: (index) {
-            // Handle bottom navigation item tapped
-          },
-          currentIndex: 0, // Set the initial index
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cart'),
+        backgroundColor: Colors.pink,
       ),
-    );
-  }
-
-  Widget _buildCartList() {
-    return ListView.builder(
-      itemCount: _cartItems.length,
-      itemBuilder: (context, index) {
-        final item = _cartItems[index];
-        return ListTile(
-          title: Text(item['name']),
-          subtitle: Text('Price: \$${item['price']}'),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.remove),
-                onPressed: () {
-                  setState(() {
-                    if (item['quantity'] > 1) {
-                      item['quantity']--;
-                    }
-                  });
-                },
-              ),
-              Text('${item['quantity']}'),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  setState(() {
-                    item['quantity']++;
-                  });
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildTotalAmount() {
-    double totalAmount = _calculateTotalPrice();
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(
         children: [
-          Text(
-            'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CheckoutPage()),
-              );
-            },
-            style: ElevatedButton.styleFrom(
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: CartScreen.cartItems.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: Image.network(CartScreen.cartItems[index]['imageUrl']),
+                      title: Text(CartScreen.cartItems[index]['name']),
+                      subtitle: Text(
+                        '\$${CartScreen.cartItems[index]['price']} x ${CartScreen.cartItems[index]['quantity']}',
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          removeFromCart(index);
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-            child: Text('Checkout'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: checkout,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.pink,
+                ),
+                child: const Text('Checkout'),
+              ),
+            ),
           ),
         ],
       ),
     );
   }
-
-  double _calculateTotalPrice() {
-    double totalPrice = 0;
-    _cartItems.forEach((item) {
-      totalPrice += (item['price'] * item['quantity']);
-    });
-    return totalPrice;
-  }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: CartScreen(),
-  ));
-}

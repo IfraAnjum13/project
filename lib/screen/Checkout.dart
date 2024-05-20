@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Checkout App',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-      ),
-      home: CheckoutPage(),
-    );
-  }
-}
+import 'package:project/screen/payment.dart';
 
 class CheckoutPage extends StatefulWidget {
   @override
@@ -34,14 +18,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
   String _phoneNumber = '';
 
   void _placeOrder() {
-    // Logic to place the order
-    // For example, you might navigate to a confirmation screen
-    print('Order placed with details:');
-    print('Name: $_name');
-    print('Email: $_email');
-    print('Address: $_address');
-    print('Phone: $_phoneNumber');
-    print('Selected Address: $_selectedAddress');
+    // Navigate to the payment screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentScreen(
+          name: _name,
+          email: _email,
+          address: _address,
+          phoneNumber: _phoneNumber,
+          selectedAddress: _selectedAddress,
+        ),
+      ),
+    );
   }
 
   @override
@@ -53,7 +42,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           title: Text('Checkout'),
           backgroundColor: Colors.pink,
         ),
-        body: SingleChildScrollView( // Wrap Scaffold with SingleChildScrollView
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -105,7 +94,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     _phoneNumber = value;
                   },
                 ),
-                SizedBox(height: 10), // Reduce space here
+                SizedBox(height: 10),
                 Text(
                   'Billing Information',
                   style: TextStyle(
@@ -128,7 +117,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Increase space here if needed
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _placeOrder,
                   style: ElevatedButton.styleFrom(

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/homepage.dart';
-import 'package:project/signup.dart';
 import 'package:project/screen/forgotPassword.dart';
+import 'package:project/signup.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,6 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
 
   void _togglePasswordVisibility() {
@@ -17,17 +22,24 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void _login() {
+  Future<void> _login() async {
     // Perform your login logic here
-    bool loginSuccess = true; // Assuming login is successful for demonstration
+    bool loginSuccess = false; // Assuming login is successful for demonstration
 
-    if (loginSuccess) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()), // Navigate to homepage
-      );
-    } else {
-      // Handle login failure
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      loginSuccess = true;
+      if (loginSuccess) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage()), // Navigate to homepage
+        );
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 
@@ -47,7 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: 20), // Add space between AppBar and heading
+                    SizedBox(
+                        height: 20), // Add space between AppBar and heading
                     Text(
                       'Welcome to Glamify! Please login',
                       style: TextStyle(
@@ -55,8 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20), // Add space between heading and fields
+                    SizedBox(
+                        height: 20), // Add space between heading and fields
                     TextFormField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
                       ),
@@ -64,10 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 20),
                     TextFormField(
                       obscureText: _obscureText,
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         suffixIcon: IconButton(
-                          icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off), // Change icon based on obscureText state
+                          icon: Icon(_obscureText
+                              ? Icons.visibility
+                              : Icons
+                                  .visibility_off), // Change icon based on obscureText state
                           onPressed: _togglePasswordVisibility,
                         ),
                       ),
@@ -80,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => ForgotPasswordScreen()),
                             );
                           },
                           child: Text(
@@ -91,7 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: _login, // Call login function when button is pressed
+                      onPressed:
+                          _login, // Call login function when button is pressed
                       child: Text('Login'),
                     ),
                     SizedBox(height: 10), // Add some space between buttons
@@ -99,7 +120,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignUpScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => SignUpScreen()),
                         );
                       },
                       child: Text(
@@ -115,7 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         // Continue with Google functionality
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Set background color to white
+                        backgroundColor:
+                            Colors.white, // Set background color to white
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -124,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             'assets/glogo.png', // Add path to Google logo image
                             height: 20,
                           ),
-                          SizedBox(width: 10), // Add space between icon and text
+                          SizedBox(
+                              width: 10), // Add space between icon and text
                           Text(
                             'Continue with Google',
                             style: TextStyle(color: Colors.black),
