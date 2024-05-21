@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project/firebase_options.dart';
+//import 'package:project/beauty.dart';
 import 'package:project/login.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
 import 'package:project/screen/cartScreen.dart';
@@ -9,12 +8,10 @@ import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/user_profile.dart';
 import 'package:project/signup.dart';
 import 'package:project/women.dart';
+//import 'package:project/men.dart';
+//import 'package:project/kids.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(const MyApp());
 }
 
@@ -47,7 +44,7 @@ class HomePage extends StatelessWidget {
             'Glamify',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.pink,
+          backgroundColor: Colors.pinkAccent,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.notifications),
@@ -83,18 +80,6 @@ class HomePage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              const DrawerHeader(
-                child: Text(
-                  'DashBoard',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.pink,
-                ),
-              ),
               if (FirebaseAuth.instance.currentUser == null)
                 ListTile(
                   leading: const Icon(Icons.login),
@@ -150,6 +135,42 @@ class HomePage extends StatelessWidget {
                   );
                 },
               ),
+              // ListTile(
+              //   leading: const Icon(Icons.woman), // Icon for the Women category
+              //   title: const Text('Men'), // Title for the Women category
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) =>
+              //               MensWearScreen()), // Navigate to the Women's Wear Screen
+              //     );
+              //   },
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.woman), // Icon for the Women category
+              //   title: const Text('Women'), // Title for the Women category
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) =>
+              //               kidsWearScreen()), // Navigate to the Women's Wear Screen
+              //     );
+              //   },
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.woman), // Icon for the Women category
+              //   title: const Text('Women'), // Title for the Women category
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) =>
+              //               beautyScreen()), // Navigate to the Women's Wear Screen
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
@@ -181,14 +202,13 @@ class HomePage extends StatelessWidget {
                       const CategoryChip(icon: Icons.woman, label: 'Women'),
                       const CategoryChip(icon: Icons.child_care, label: 'Kids'),
                       const CategoryChip(icon: Icons.face, label: 'Beauty'),
-                      const CategoryChip(
-                          icon: Icons.accessibility, label: 'FootWear')
+                      const CategoryChip(icon: Icons.accessibility, label: 'FootWear')
                     ],
                   ),
                 ),
                 BannerSliderWithDots(
                     bannerImages:
-                        bannerImages), // Call the modified BannerSliderWithDots widget
+                    bannerImages), // Call the modified BannerSliderWithDots widget
                 TrendingNow(),
               ],
             ),
@@ -238,7 +258,8 @@ class CategoryChip extends StatelessWidget {
                 builder: (context) =>
                     WomensWearScreen()), // Navigate to the Women's Wear Screen
           );
-        } else {
+        }
+        else {
           // Handle navigation for other categories
         }
       },
