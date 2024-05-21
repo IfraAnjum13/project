@@ -5,7 +5,6 @@ class CheckoutPage extends StatefulWidget {
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
 }
-
 class _CheckoutPageState extends State<CheckoutPage> {
   String _selectedAddress = 'Home';
   int _subtotal = 36000;
