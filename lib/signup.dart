@@ -165,7 +165,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             );
           },
-          child: const Text('Sign Up'),
+          child: const Text('Sign Up',style: TextStyle(color: Colors.white),),
         ),
         const SizedBox(height: 20.0),
         Row(

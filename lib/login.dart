@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                       onPressed:
                           _login, // Call login function when button is pressed
-                      child: const Text('Login'),
+                      child: const Text('Login',style: TextStyle(color: Colors.white),),
                     ),
                     const SizedBox(
                         height: 10), // Add some space between buttons
