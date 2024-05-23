@@ -3,7 +3,7 @@ import 'dart:convert';
 
 // wear_item.dart
 class WearItem {
-  final String id;
+  final String? id;
   final String imageUrl;
   final String name;
   final double price;
@@ -12,11 +12,11 @@ class WearItem {
 
   WearItem(
       {required this.imageUrl,
-      required this.id,
+      this.id,
       required this.name,
       required this.price,
       required this.rating,
-      required this.description});
+      this.description = ''});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -34,8 +34,8 @@ class WearItem {
       id: map['id'] as String,
       imageUrl: map['imageUrl'] as String,
       name: map['name'] as String,
-      price: map['price'] as double,
-      rating: map['rating'] as double,
+      price: double.parse(map['price'].toString()),
+      rating: double.parse(map['rating'].toString()),
       description: map['description'] as String,
     );
   }

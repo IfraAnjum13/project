@@ -87,7 +87,7 @@ class WelcomeScreen extends StatelessWidget {
                   //   final product = WearItems[i].toMap();
                   //   product['id'] = uid;
                   //   FirebaseFirestore.instance
-                  //       .collection('products')
+                  //       .collection('beauty')
                   //       .doc(uid)
                   //       .set(product);
                   // }

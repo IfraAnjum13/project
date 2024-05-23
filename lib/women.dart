@@ -29,7 +29,7 @@ class _WomensWearScreenState extends State<WomensWearScreen> {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 2,
           backgroundColor: Colors.black,
-          textColor: Colors.white, 
+          textColor: Colors.white,
           fontSize: 16.0);
       final result =
           await FirebaseFirestore.instance.collection('products').get();
@@ -56,7 +56,7 @@ class _WomensWearScreenState extends State<WomensWearScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Women\'s Wear'),
+          title: const Text('Women\'s Wear',style: TextStyle(fontWeight: FontWeight.bold),),
           backgroundColor: Colors.pink,
         ),
         body: Padding(
@@ -66,7 +66,7 @@ class _WomensWearScreenState extends State<WomensWearScreen> {
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              childAspectRatio: 0.75,
+              childAspectRatio: 0.55,
             ),
             itemCount: wearItems.length,
             itemBuilder: (context, index) {
@@ -112,13 +112,27 @@ class _WomensWearScreenState extends State<WomensWearScreen> {
                         child: Text(
                           '\$${wearItems[index].price}',
                           style:
-                              const TextStyle(fontSize: 14, color: Colors.grey),
+                              const TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                            const Icon(Icons.star, color: Colors.pink),
+                        const SizedBox(width: 4),
+                        Text(
+                          wearItems[index].rating.toString(),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                     ],
                   ),
                 ),
-              );
+              ],
+              ),
+                ));
             },
           ),
         ),

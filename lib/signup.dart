@@ -103,7 +103,9 @@ class _SignUpFormState extends State<SignUpForm> {
           decoration: const InputDecoration(labelText: 'Phone Number'),
         ),
         const SizedBox(height: 20.0),
-        ElevatedButton(
+        ElevatedButton(style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.pink,
+        ),
           onPressed: () async {
             // Get user input from the form
             String fullName = _fullNameController.text;

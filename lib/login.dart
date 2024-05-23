@@ -24,21 +24,39 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     // Perform your login logic here
-    bool loginSuccess = false; // Assuming login is successful for demonstration
-
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
-      loginSuccess = true;
-      if (loginSuccess) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage()), // Navigate to homepage
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: const Text('Successfully logged in')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage()), // Navigate to homepage
+      );
+    } catch (e) {
+      if (e is FirebaseAuthException && e.code == 'user-not-found') {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Error'),
+            content: const Text('You are not signed up, please first sign up'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
         );
       }
-    } catch (e) {
       log(e.toString());
     }
   }
@@ -48,35 +66,43 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Glamify'),
-          backgroundColor: Colors.pink, // Set app bar color
+          title: const Text(
+            'Glamify',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.pink,
         ),
         body: Column(
           children: [
+            const SizedBox(height: 20), // Add space between AppBar and avatar
+            const CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage(
+                  'assets/lo.jpg'), // Replace with your avatar image asset
+            ),
+            const SizedBox(height: 20), // Add space between avatar and heading
+            const Text(
+              'Welcome to Glamify! Please login',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                        height: 20), // Add space between AppBar and heading
-                    Text(
-                      'Welcome to Glamify! Please login',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
+                    const SizedBox(
                         height: 20), // Add space between heading and fields
                     TextFormField(
                       controller: _emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email',
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       obscureText: _obscureText,
                       controller: _passwordController,
@@ -91,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
@@ -103,57 +129,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context) => ForgotPasswordScreen()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'Forgot Password?',
                             style: TextStyle(color: Colors.black),
                           ),
                         ),
                       ],
                     ),
-                    ElevatedButton(
+                    ElevatedButton(style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink,
+                    ),
                       onPressed:
                           _login, // Call login function when button is pressed
-                      child: Text('Login'),
+                      child: const Text('Login'),
                     ),
-                    SizedBox(height: 10), // Add some space between buttons
+                    const SizedBox(
+                        height: 10), // Add some space between buttons
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
+                              builder: (context) => const SignUpScreen()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Don\'t have an account? Sign up',
                         style: TextStyle(
                           color: Colors.pink,
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 10), // Add some space between buttons
-                    ElevatedButton(
-                      onPressed: () {
-                        // Continue with Google functionality
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.white, // Set background color to white
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/glogo.png', // Add path to Google logo image
-                            height: 20,
-                          ),
-                          SizedBox(
-                              width: 10), // Add space between icon and text
-                          Text(
-                            'Continue with Google',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ],
                       ),
                     ),
                   ],

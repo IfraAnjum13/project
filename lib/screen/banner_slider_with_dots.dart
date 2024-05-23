@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class BannerSliderWithDots extends StatefulWidget {
   final List<String> bannerImages;
 
-  BannerSliderWithDots({required this.bannerImages});
+  const BannerSliderWithDots({super.key, required this.bannerImages});
 
   @override
   _BannerSliderWithDotsState createState() => _BannerSliderWithDotsState();
@@ -11,6 +12,37 @@ class BannerSliderWithDots extends StatefulWidget {
 
 class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
   int _currentPage = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_currentPage < widget.bannerImages.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +51,7 @@ class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
         SizedBox(
           height: 200,
           child: PageView.builder(
+            controller: _pageController,
             itemCount: widget.bannerImages.length,
             onPageChanged: (value) {
               setState(() {
@@ -27,7 +60,7 @@ class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
             },
             itemBuilder: (context, index) {
               return Container(
-                margin: EdgeInsets.symmetric(horizontal: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
@@ -39,7 +72,7 @@ class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
             },
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
@@ -48,8 +81,8 @@ class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
                 ? Container(
               width: 10,
               height: 10,
-              margin: EdgeInsets.symmetric(horizontal: 2),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.symmetric(horizontal: 2),
+              decoration: const BoxDecoration(
                 color: Colors.pink,
                 shape: BoxShape.circle,
               ),
@@ -57,8 +90,8 @@ class _BannerSliderWithDotsState extends State<BannerSliderWithDots> {
                 : Container(
               width: 10,
               height: 10,
-              margin: EdgeInsets.symmetric(horizontal: 2),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.symmetric(horizontal: 2),
+              decoration: const BoxDecoration(
                 color: Colors.grey,
                 shape: BoxShape.circle,
               ),

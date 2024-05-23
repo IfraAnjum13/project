@@ -6,31 +6,31 @@ class ForgotPasswordScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Forgot Password'),
+          title: const Text('Forgot Password'),
           backgroundColor: Colors.pink,
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Enter your email address to reset your password.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Add logic to send password reset email
                 },
-                child: Text('Send Code'),
+                child: const Text('Send Code'),
               ),
             ],
           ),

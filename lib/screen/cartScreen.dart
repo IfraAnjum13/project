@@ -1,29 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screen/Checkout.dart';
-class CheckoutScreen extends StatelessWidget {
-  const CheckoutScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Checkout'),
-        backgroundColor: Colors.pink,
-      ),
-      body: const Center(
-        child: Text(
-          'Proceed with your payment details here.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
+import 'package:project/login.dart';
+import 'package:project/screen/Checkout.dart'; // Import the CheckoutPage
 
 class CartScreen extends StatefulWidget {
   static List<Map<String, dynamic>> cartItems = [];
 
-  const CartScreen({super.key});
+  const CartScreen({Key? key});
 
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -40,9 +24,11 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void checkout() {
+    // Navigate to the CheckoutPage
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+      MaterialPageRoute(
+          builder: (context) => const CheckoutPage()), // Navigate to CheckoutPage
     );
   }
 
@@ -63,7 +49,8 @@ class _CartScreenState extends State<CartScreen> {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      leading: Image.network(CartScreen.cartItems[index]['imageUrl']),
+                      leading: Image.network(
+                          CartScreen.cartItems[index]['imageUrl']),
                       title: Text(CartScreen.cartItems[index]['name']),
                       subtitle: Text(
                         '\$${CartScreen.cartItems[index]['price']} x ${CartScreen.cartItems[index]['quantity']}',
@@ -85,11 +72,49 @@ class _CartScreenState extends State<CartScreen> {
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: checkout,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pink,
+                onPressed: CartScreen.cartItems.isEmpty
+                    ? null
+                    : FirebaseAuth.instance.currentUser == null
+                        ? () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                content: const Text('Please Login to Checkout!'),
+                                actions: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.pink,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                            builder: (ctx) => LoginScreen()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Yes',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      'No',
+                                      style: TextStyle(color: Colors.pink),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        : checkout, style: ElevatedButton.styleFrom(backgroundColor: Colors.pink,
                 ),
-                child: const Text('Checkout'),
+                child: const Text(
+                  'Checkout',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),
@@ -98,4 +123,3 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
-

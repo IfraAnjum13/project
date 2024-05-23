@@ -24,6 +24,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   String _selectedPaymentMethod = 'Cash on Delivery';
 
   void _confirmOrder() {
+    
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -83,10 +84,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   textStyle: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+
                   ),
                 ),
                 child: Center(
-                  child: Text('Confirm Order'),
+                  child: Text('Confirm Order',style: TextStyle(color: Colors.black)),
                 ),
               ),
             ],

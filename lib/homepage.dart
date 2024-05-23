@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:project/beauty.dart';
+import 'package:project/beauty.dart';
 import 'package:project/login.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
 import 'package:project/screen/cartScreen.dart';
@@ -8,8 +8,11 @@ import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/user_profile.dart';
 import 'package:project/signup.dart';
 import 'package:project/women.dart';
-//import 'package:project/men.dart';
-//import 'package:project/kids.dart';
+import 'package:project/men.dart';
+import 'package:project/kids.dart';
+import 'package:project/footwear.dart';
+import 'package:project/screen/notification.dart';
+import 'package:project/screen/contactus.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -31,8 +34,7 @@ class HomePage extends StatelessWidget {
     'https://marketplace.canva.com/EAFWecuevFk/1/0/1600w/canva-grey-brown-minimalist-summer-season-collections-banner-landscape-VXEmg9V800o.jpg',
     'https://mir-s3-cdn-cf.behance.net/project_modules/hd/ea996e45377079.5937175b5b421.jpg',
     'https://cdn.dribbble.com/users/4829229/screenshots/20005600/media/ad2a086fe3adc5ed3694f710509ba859.jpg?resize=400x300&vertical=center',
-    'https://static.vecteezy.com/system/resources/previews/005/992/397/non_2x/electronics-store-that-sells-computers-tv-cellphones-and-buying-home-appliance-product-in-flat-background-illustration-for-poster-or-banner-vector.jpg',
-    'https://img.freepik.com/free-vector/minimal-makeup-artist-youtube-thumbnail_23-2149378997.jpg',
+    'https://www.zilliondesigns.com/blog/wp-content/uploads/Perfect-Ecommerce-Sales-Banner.jpg',
   ];
 
   @override
@@ -40,16 +42,17 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Glamify',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.pinkAccent,
+          title: const Text('Glamify', style: TextStyle(fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.pink,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.notifications),
               onPressed: () {
-                // Add notification functionality here
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotificationScreen()),
+
+                );
               },
             ),
             IconButton(
@@ -77,7 +80,9 @@ class HomePage extends StatelessWidget {
           ],
         ),
         drawer: Drawer(
-          child: ListView(
+    child: Container(
+    color: Colors.pink,
+    child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               if (FirebaseAuth.instance.currentUser == null)
@@ -113,66 +118,18 @@ class HomePage extends StatelessWidget {
                 leading: const Icon(Icons.contact_mail),
                 title: const Text('Contact Us'),
                 onTap: () {
-                  // Navigate to contact us page
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.history),
-                title: const Text('Order History'),
-                onTap: () {
-                  // Navigate to order history page
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.woman), // Icon for the Women category
-                title: const Text('Women'), // Title for the Women category
-                onTap: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            WomensWearScreen()), // Navigate to the Women's Wear Screen
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => ContactUsScreen()),
                   );
                 },
               ),
-              // ListTile(
-              //   leading: const Icon(Icons.woman), // Icon for the Women category
-              //   title: const Text('Men'), // Title for the Women category
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) =>
-              //               MensWearScreen()), // Navigate to the Women's Wear Screen
-              //     );
-              //   },
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.woman), // Icon for the Women category
-              //   title: const Text('Women'), // Title for the Women category
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) =>
-              //               kidsWearScreen()), // Navigate to the Women's Wear Screen
-              //     );
-              //   },
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.woman), // Icon for the Women category
-              //   title: const Text('Women'), // Title for the Women category
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) =>
-              //               beautyScreen()), // Navigate to the Women's Wear Screen
-              //     );
+
               //   },
               // ),
             ],
-          ),
+          ),)
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -253,15 +210,32 @@ class CategoryChip extends StatelessWidget {
       onTap: () {
         if (label == 'Women') {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    WomensWearScreen()), // Navigate to the Women's Wear Screen
+            context, MaterialPageRoute(builder: (context) => WomensWearScreen()),
+          );
+        } else if (label == 'Men') {
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MensWearScreen()), // Navigate to MensWearScreen
+          );
+        }
+        else if (label == 'Kids') {
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context) => kidsWearScreen()), // Navigate to the Kids Wear Screen
+          );
+        }
+        else if (label == 'Beauty') {
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context) => beautyScreen()), // Navigate to the beauty Screen
+          );
+        }
+        else if (label == 'Footwear') {
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context) => FootwearScreen()),
           );
         }
         else {
-          // Handle navigation for other categories
+
         }
+        // Add additional else if conditions for other categories if needed.
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
