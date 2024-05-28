@@ -24,7 +24,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   String _selectedPaymentMethod = 'Cash on Delivery';
 
   void _confirmOrder() {
-    
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -42,25 +41,31 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Method'),
-        backgroundColor: Colors.pink,
-      ),
-      body: SafeArea(
-        child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Payment Method',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.pink,
+        ),
+        body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Payment Method',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButton<String>(
                 value: _selectedPaymentMethod,
                 onChanged: (value) {
@@ -68,7 +73,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     _selectedPaymentMethod = value!;
                   });
                 },
-                items: [
+                items: const [
                   DropdownMenuItem(
                     value: 'Cash on Delivery',
                     child: Text('Cash on Delivery'),
@@ -76,19 +81,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   // You can add more payment methods here
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _confirmOrder,
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  textStyle: TextStyle(
+                  backgroundColor: Colors.pink,
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                  textStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-
                   ),
                 ),
-                child: Center(
-                  child: Text('Confirm Order',style: TextStyle(color: Colors.black)),
+                child: const Center(
+                  child: Text(
+                    'Confirm Order',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],

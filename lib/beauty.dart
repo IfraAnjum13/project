@@ -54,7 +54,7 @@ class _beautyScreenState extends State<beautyScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Beauty Products',style: TextStyle(fontWeight: FontWeight.bold),),
+          title: Text('Beauty Products',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
           backgroundColor: Colors.pink,
         ),
         body: Padding(

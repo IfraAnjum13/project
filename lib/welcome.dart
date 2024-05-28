@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/homepage.dart';
-import 'package:project/login.dart'; // Import your login file
+import 'package:project/login.dart';
 import 'package:project/signup.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -33,15 +33,14 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Welcome to Our Store',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    const Text('Welcome to Our Store',style: TextStyle(fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,)
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Please login or sign up to continue',
-                      style: TextStyle(fontSize: 16),
+                      'Please login or sign up to continue',style: TextStyle(fontSize: 16,
+                        color: Colors.white,)
                     ),
                     const SizedBox(height: 30),
                     SizedBox(
@@ -55,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                                 builder: (context) => SignUpScreen()),
                           );
                         },
-                        child: const Text('Signup'),
+                        child: const Text('Signup',style: TextStyle(color: Colors.black),),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -70,7 +69,7 @@ class WelcomeScreen extends StatelessWidget {
                                 builder: (context) => LoginScreen()),
                           );
                         },
-                        child: const Text('Login'),
+                        child: const Text('Login',style: TextStyle(color: Colors.black),),
                       ),
                     ),
                   ],
@@ -82,15 +81,6 @@ class WelcomeScreen extends StatelessWidget {
               right: 20,
               child: TextButton(
                 onPressed: () {
-                  // for (var i = 0; i < WearItems.length; i++) {
-                  //   final uid = Uuid().v1();
-                  //   final product = WearItems[i].toMap();
-                  //   product['id'] = uid;
-                  //   FirebaseFirestore.instance
-                  //       .collection('beauty')
-                  //       .doc(uid)
-                  //       .set(product);
-                  // }
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),
@@ -101,9 +91,9 @@ class WelcomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Skip',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     ),
-                    Icon(Icons.arrow_forward, color: Colors.black),
+                    Icon(Icons.arrow_forward, color: Colors.white),
                   ],
                 ),
               ),

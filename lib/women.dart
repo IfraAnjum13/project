@@ -56,7 +56,7 @@ class _WomensWearScreenState extends State<WomensWearScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Women\'s Wear',style: TextStyle(fontWeight: FontWeight.bold),),
+          title: const Text('Women\'s Wear',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
           backgroundColor: Colors.pink,
         ),
         body: Padding(

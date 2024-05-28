@@ -18,9 +18,7 @@ class SignUpScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: const Text(
-              'Glamify',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+              'Glamify', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
             backgroundColor: Colors.pink,
           ),
           body: Column(
@@ -40,9 +38,7 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: SignUpForm(
                     onSignUpComplete: (userData) {
-                      // Handle signup completion here
                       print('User signed up: $userData');
-                      // You can navigate to another screen or perform any other action
                     },
                   ),
                 ),
@@ -167,7 +163,7 @@ class _SignUpFormState extends State<SignUpForm> {
           },
           child: const Text('Sign Up',style: TextStyle(color: Colors.white),),
         ),
-        const SizedBox(height: 20.0),
+        const SizedBox(height: 10.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

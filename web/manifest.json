@@ -1,11 +1,11 @@
 {
-    "name": "project",
-    "short_name": "project",
+    "name": "Glamify",
+    "short_name": "Glamify",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#hexcode",
+    "theme_color": "#hexcode",
+    "description": "Welcome to Glamify",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

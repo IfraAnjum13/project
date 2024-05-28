@@ -1,33 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/beauty.dart';
+import 'package:project/footwear.dart';
+import 'package:project/kids.dart';
 import 'package:project/login.dart';
+import 'package:project/men.dart';
 import 'package:project/screen/banner_slider_with_dots.dart';
 import 'package:project/screen/cartScreen.dart';
+import 'package:project/screen/contactus.dart';
+import 'package:project/screen/notification.dart';
 import 'package:project/screen/trending_now.dart';
 import 'package:project/screen/user_profile.dart';
 import 'package:project/signup.dart';
 import 'package:project/women.dart';
-import 'package:project/men.dart';
-import 'package:project/kids.dart';
-import 'package:project/footwear.dart';
-import 'package:project/screen/notification.dart';
-import 'package:project/screen/contactus.dart';
-
-void main() async {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatelessWidget {
   final List<String> bannerImages = [
@@ -42,21 +27,33 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Glamify', style: TextStyle(fontWeight: FontWeight.bold),),
+          iconTheme: IconThemeData(color: Colors.white),
+          title: const Text(
+            'Glamify',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
           backgroundColor: Colors.pink,
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NotificationScreen()),
-
+                  context,
+                  MaterialPageRoute(builder: (context) => NotificationScreen()),
                 );
               },
             ),
             IconButton(
-              icon: const Icon(Icons.shopping_cart),
+              icon: const Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -74,21 +71,29 @@ class HomePage extends StatelessWidget {
                 },
                 child: const Text(
                   'Signup',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
           ],
-        ),
+        ), 
         drawer: Drawer(
-    child: Container(
-    color: Colors.pink,
-    child: ListView(
+            child: Container(
+          color: Colors.pink,
+          child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               if (FirebaseAuth.instance.currentUser == null)
                 ListTile(
-                  leading: const Icon(Icons.login),
-                  title: const Text('Login'),
+                  leading: const Icon(
+                    Icons.login,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Login',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -97,15 +102,34 @@ class HomePage extends StatelessWidget {
                   },
                 ),
               ListTile(
-                leading: const Icon(Icons.details),
-                title: const Text('Product Details'),
+                leading: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'View Cart',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 onTap: () {
-                  // Navigate to product details page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartScreen()),
+                  );
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('User Profile'),
+                leading: const Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'User Profile',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -115,13 +139,20 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.contact_mail),
-                title: const Text('Contact Us'),
+                leading: const Icon(
+                  Icons.contact_mail,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Contact Us',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                      builder: (context) => ContactUsScreen()),
+                    context,
+                    MaterialPageRoute(builder: (context) => ContactUsScreen()),
                   );
                 },
               ),
@@ -129,8 +160,8 @@ class HomePage extends StatelessWidget {
               //   },
               // ),
             ],
-          ),)
-        ),
+          ),
+        )),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -159,13 +190,13 @@ class HomePage extends StatelessWidget {
                       const CategoryChip(icon: Icons.woman, label: 'Women'),
                       const CategoryChip(icon: Icons.child_care, label: 'Kids'),
                       const CategoryChip(icon: Icons.face, label: 'Beauty'),
-                      const CategoryChip(icon: Icons.accessibility, label: 'FootWear')
+                      //const CategoryChip(icon: Icons.accessibility, label: 'FootWear')
                     ],
                   ),
                 ),
                 BannerSliderWithDots(
                     bannerImages:
-                    bannerImages), // Call the modified BannerSliderWithDots widget
+                        bannerImages), // Call the modified BannerSliderWithDots widget
                 TrendingNow(),
               ],
             ),
@@ -210,31 +241,34 @@ class CategoryChip extends StatelessWidget {
       onTap: () {
         if (label == 'Women') {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => WomensWearScreen()),
+            context,
+            MaterialPageRoute(builder: (context) => WomensWearScreen()),
           );
         } else if (label == 'Men') {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MensWearScreen()), // Navigate to MensWearScreen
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    MensWearScreen()), // Navigate to MensWearScreen
           );
-        }
-        else if (label == 'Kids') {
+        } else if (label == 'Kids') {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => kidsWearScreen()), // Navigate to the Kids Wear Screen
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    kidsWearScreen()), // Navigate to the Kids Wear Screen
           );
-        }
-        else if (label == 'Beauty') {
+        } else if (label == 'Beauty') {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => beautyScreen()), // Navigate to the beauty Screen
+            context,
+            MaterialPageRoute(builder: (context) => beautyScreen()), // Navigate to the beauty Screen
           );
-        }
-        else if (label == 'Footwear') {
-          Navigator.push(
-            context, MaterialPageRoute(builder: (context) => FootwearScreen()),
-          );
-        }
-        else {
-
-        }
+        // } else if (label == 'Footwear') {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => FootwearScreen()),
+        //   );
+        } else {}
         // Add additional else if conditions for other categories if needed.
       },
       child: Container(

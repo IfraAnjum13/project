@@ -34,91 +34,97 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cart'),
-        backgroundColor: Colors.pink,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Cart',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          backgroundColor: Colors.pink,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: CartScreen.cartItems.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        leading: Image.network(CartScreen.cartItems[index]['imageUrl']),
+                        title: Text(CartScreen.cartItems[index]['name']),
+                        subtitle: Text(
+                          '\$${CartScreen.cartItems[index]['price']} x ${CartScreen.cartItems[index]['quantity']}',
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            removeFromCart(index);
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: CartScreen.cartItems.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      leading: Image.network(
-                          CartScreen.cartItems[index]['imageUrl']),
-                      title: Text(CartScreen.cartItems[index]['name']),
-                      subtitle: Text(
-                        '\$${CartScreen.cartItems[index]['price']} x ${CartScreen.cartItems[index]['quantity']}',
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: CartScreen.cartItems.isEmpty
+                      ? null
+                      : FirebaseAuth.instance.currentUser == null
+                      ? () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        content: const Text('Please Login to Checkout!'),
+                        actions: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.pink,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                    builder: (ctx) => LoginScreen()),
+                              );
+                            },
+                            child: const Text(
+                              'Yes',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              'No',
+                              style: TextStyle(color: Colors.pink),
+                            ),
+                          ),
+                        ],
                       ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          removeFromCart(index);
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: CartScreen.cartItems.isEmpty
-                    ? null
-                    : FirebaseAuth.instance.currentUser == null
-                        ? () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                content: const Text('Please Login to Checkout!'),
-                                actions: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.pink,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                            builder: (ctx) => LoginScreen()),
-                                      );
-                                    },
-                                    child: const Text(
-                                      'Yes',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text(
-                                      'No',
-                                      style: TextStyle(color: Colors.pink),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                        : checkout, style: ElevatedButton.styleFrom(backgroundColor: Colors.pink,
-                ),
-                child: const Text(
-                  'Checkout',
-                  style: TextStyle(color: Colors.white),
+                    );
+                  }
+                      : checkout,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                  ),
+                  child: const Text(
+                    'Checkout',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

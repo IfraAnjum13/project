@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text.trim(),
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: const Text('Successfully logged in')),
+        const SnackBar(content: Text('Successfully logged in')),
       );
       Navigator.push(
         context,
@@ -66,9 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: BackButton(
+            color: Colors.black, // Set the back button color to black
+          ),
           title: const Text(
             'Glamify',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
           backgroundColor: Colors.pink,
         ),
@@ -111,8 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         suffixIcon: IconButton(
                           icon: Icon(_obscureText
                               ? Icons.visibility
-                              : Icons
-                                  .visibility_off), // Change icon based on obscureText state
+                              : Icons.visibility_off), // Change icon based on obscureText state
                           onPressed: _togglePasswordVisibility,
                         ),
                       ),
@@ -126,7 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ForgotPasswordScreen()),
+                                  builder: (context) =>
+                                      ForgotPasswordScreen()),
                             );
                           },
                           child: const Text(
@@ -136,12 +139,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    ElevatedButton(style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink,
-                    ),
-                      onPressed:
-                          _login, // Call login function when button is pressed
-                      child: const Text('Login',style: TextStyle(color: Colors.white),),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pink,
+                      ),
+                      onPressed: _login, // Call login function when button is pressed
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     const SizedBox(
                         height: 10), // Add some space between buttons

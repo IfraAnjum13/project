@@ -60,9 +60,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Checkout',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          title: const Text('Checkout',
+            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+
           ),
           backgroundColor: Colors.pink,
         ),
@@ -76,7 +76,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   'Customer Information',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,color: Colors.white
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -146,6 +146,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ElevatedButton(
                   onPressed: _placeOrder,
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                     textStyle: const TextStyle(
                       fontSize: 16,
@@ -153,7 +154,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ),
                   child: const Center(
-                    child: Text('Place Order',style: TextStyle(color: Colors.black),),
+                    child: Text('Place Order',style: TextStyle(color: Colors.white),),
+
                   ),
                 ),
               ],

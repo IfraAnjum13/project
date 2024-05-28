@@ -25,10 +25,11 @@ class UserProfileScreen extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(
                 Icons.account_circle,
+                color: Colors.white,
                 size: 25,
               ), // User profile icon
               onPressed: () {
-                debugPrint('User profile icon tapped');
+                debugPrint('User profile icon tapped',);
               },
             ),
             flexibleSpace: Column(
@@ -46,7 +47,7 @@ class UserProfileScreen extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -66,7 +67,7 @@ class UserProfileScreen extends StatelessWidget {
                         },
                         child: const Text(
                           'Sign Up',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     PopupMenuButton<String>(
@@ -81,7 +82,7 @@ class UserProfileScreen extends StatelessWidget {
                           });
                         }
                       },
-                      icon: const Icon(Icons.settings, color: Colors.black),
+                      icon: const Icon(Icons.settings, color: Colors.white),
                       itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<String>>[
                         const PopupMenuItem<String>(

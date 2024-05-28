@@ -54,7 +54,7 @@ class _kidsWearScreenState extends State<kidsWearScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Kids\'s Wear',style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text('Kids\'s Wear',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
           backgroundColor: Colors.pink,
         ),
         body: Padding(

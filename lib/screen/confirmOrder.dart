@@ -45,7 +45,7 @@ class ConfirmationScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Order Confirmation'),
+          title: const Text('Order Confirmation', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
           backgroundColor: Colors.pink,
         ),
         body: Padding(
@@ -103,8 +103,8 @@ class ConfirmationScreen extends StatelessWidget {
                     'total': _subtotal + _deliveryFee,
                     'method': paymentMethod,
                     'orderDetails': orderDetails,
-                    'orderDate':
-                        DateFormat('EEEE, dd, yyyy').format(DateTime.now()),
+                    'statusCode': 0,
+                    'orderDate': DateTime.now(),
                   }).then((_) {
                     CartScreen.cartItems = [];
                     Navigator.of(context).pushReplacement(
@@ -113,7 +113,7 @@ class ConfirmationScreen extends StatelessWidget {
                   print('Order completed');
                 },
                 style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink,
+                  backgroundColor: Colors.pink,
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   textStyle: const TextStyle(
@@ -122,7 +122,8 @@ class ConfirmationScreen extends StatelessWidget {
                   ),
                 ),
                 child: const Center(
-                  child: Text('Complete Order',style: TextStyle(color: Colors.white)),
+                  child: Text('Complete Order',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],
